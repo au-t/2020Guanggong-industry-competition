@@ -1,10 +1,12 @@
 import sensor, image, time
 
-green_threshold= (25, 36, -13, 3, -2, 19)
-import sensor, image, time
+green_threshold= (93, 99, -36, -7, -11, 4)
+red_threshold=(95, 98, -21, -8, 34, 61)
+yellow_threshold=(99, 100, -10, 5, -7, 20)
+
 
 # 更改此值以调整曝光。试试10.0 / 0.1 /等。
-EXPOSURE_TIME_SCALE = 0.48
+EXPOSURE_TIME_SCALE = 0.43
 
 sensor.reset()                      # 复位并初始化传感器。
 sensor.set_pixformat(sensor.RGB565) # Set pixel format to RGB565 (or GRAYSCALE)
@@ -32,20 +34,30 @@ print("Current Exposure == %d" % current_exposure_time_in_microseconds)
 sensor.set_auto_exposure(False, \
     exposure_us = int(current_exposure_time_in_microseconds * EXPOSURE_TIME_SCALE))
 
-print("New exposure == %d" % sensor.get_exposure_us())
+#print("New exposure == %d" % sensor.get_exposure_us())
 
 while(True):
     clock.tick()
     img = sensor.snapshot().lens_corr(1.8)
-    blobs = img.find_blobs([green_threshold], pixels_threshold=50, area_threshold=50, merge=True, margin=10)
+    blobs1 = img.find_blobs([green_threshold], pixels_threshold=20, area_threshold=20, merge=True, margin=10)
+    blobs2 = img.find_blobs([red_threshold], pixels_threshold=20, area_threshold=20, merge=True, margin=10)
+    blobs3 = img.find_blobs([yellow_threshold], pixels_threshold=20, area_threshold=20, merge=True, margin=10)
     for c in img.find_circles(threshold = 3500, x_margin = 10, y_margin = 10, r_margin = 10,
             r_min = 2, r_max = 100, r_step = 2):
         area = (c.x()-c.r(), c.y()-c.r(), 2*c.r(), 2*c.r())
         #area为识别到的圆的区域，即圆的外接矩形框
         statistics = img.get_statistics(roi=area)#像素颜色统计
-        img.draw_circle(c.x(), c.y(), c.r(), color = (255, 0, 0))
+        if blobs2:
+            img.draw_circle(c.x(), c.y(), c.r(), color = (0, 255, 0))
+            print("red")
         #print(statistics)
-        if blobs:
+        if blobs1:
+            img.draw_circle(c.x(), c.y(), c.r(), color = (0, 0, 255))
+            print("green")
+        if blobs2:
+            img.draw_circle(c.x(), c.y(), c.r(), color = (0, 255, 0))
+            print("red")
+        if blobs3:
             img.draw_circle(c.x(), c.y(), c.r(), color = (255, 0, 0))
-
-    print("FPS %f" % clock.fps())
+            print("yellow")
+    #print("FPS %f" % clock.fps())
