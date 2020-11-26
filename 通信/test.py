@@ -7,9 +7,9 @@ from pyb import LED
 import json
 
 
-test_threshold   = (30, 41, 47, 67, 42, 54)
+test_threshold   = (65, 69, -12, -2, 32, 57)
 
-EXPOSURE_TIME_SCALE = 0.48
+#EXPOSURE_TIME_SCALE = 0.48
 
 sensor.reset() # 初始化sensor
 sensor.set_pixformat(sensor.RGB565) # use RGB565.
@@ -29,13 +29,13 @@ sensor.set_auto_whitebal(False)
 sensor.skip_frames(time = 500)
 
 #clock = time.clock() # 跟踪FPS帧率
-current_exposure_time_in_microseconds = sensor.get_exposure_us()
+#current_exposure_time_in_microseconds = sensor.get_exposure_us()
 #print("Current Exposure == %d" % current_exposure_time_in_microseconds)
 
 # 默认情况下启用自动曝光控制（AEC）。调用以下功能可禁用传感器自动曝光控制。
 # 另外“exposure_us”参数在AEC被禁用后覆盖自动曝光值。
-sensor.set_auto_exposure(False, \
-    exposure_us = int(current_exposure_time_in_microseconds * EXPOSURE_TIME_SCALE))
+#sensor.set_auto_exposure(False, \
+    #exposure_us = int(current_exposure_time_in_microseconds * EXPOSURE_TIME_SCALE))
 
 #串口初始化Openmv
 uart = UART(3, 115200)                          ##串口3，波特率115200
@@ -46,7 +46,7 @@ while(True):
     clock.tick() # 追踪两个snapshots()之间经过的毫秒数.
     img = sensor.snapshot() # 拍一张照片并返回图像。
 
-    blobs = img.find_blobs([test_threshold],pixels_threshold=50, area_threshold=50)
+    blobs = img.find_blobs([test_threshold],pixels_threshold=25, area_threshold=25)
 
     if blobs:
     #如果找到了目标颜色

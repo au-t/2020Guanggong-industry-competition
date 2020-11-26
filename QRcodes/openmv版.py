@@ -6,7 +6,7 @@ import time
 
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QVGA)
+sensor.set_framesize(sensor.QQVGA)
 sensor.skip_frames(time = 2000)
 sensor.set_auto_gain(False)  # 必须关闭此功能，以防止图像冲洗…
 clock = time.clock()
@@ -19,9 +19,9 @@ while(True):
         img.draw_rectangle(code.rect(), color = (160, 0, 0))
         #print(code)
         message = code.payload()
-        #print(message)
-        if(code.payload() == '12'):
-            print('Extracted materials')
+        print(message)
+        #if(code.payload() == '12'):
+            #print('Extracted materials')
     #print(clock.fps())
 
 

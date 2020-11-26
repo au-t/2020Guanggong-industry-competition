@@ -5,10 +5,10 @@ import json
 # 为了使色彩追踪效果真的很好，你应该在一个非常受控制的照明环境中。
 # 设置各个颜色的阈值，括号里面的数值分别是L A B 的最大值和最小值（minL, maxL, minA,
 # maxA, minB, maxB），LAB的值在图像左侧三个坐标图中选取。
-pink_threshold =(11, 17, 21, 30, 11, 24)                  #粉色障碍物
-purple_threshold =(9, 16, -2, 12, -10, 8)                 #紫色停车区
+pink_threshold =(33, 48, 37, 64, 34, 51)                  #粉色障碍物
+purple_threshold =(22, 26, 10, 29, -34, 0)                 #紫色停车区
 brown_threshold =(16, 24, 19, 33, 8, 24)                  #棕色收货区
-depart_threshold =(25, 31, -11, 1, 25, 34)                #黄色出发区
+depart_threshold =(65, 69, -12, -2, 32, 57)               #黄色出发区
 #红绿灯阈值
 #red_threshold=(95, 98, -21, -8, 34, 61)                   #红灯
 #yellow_threshold=(99, 100, -10, 5, -7, 20)                #黄灯
@@ -70,7 +70,7 @@ while(True):
     blobs_depart = img.find_blobs([depart_threshold],pixels_threshold=50, area_threshold=50)
     #blobs_red = img.find_blobs([red_threshold],pixels_threshold=50, area_threshold=50, merge=True, margin=10)
     #blobs_yellow = img.find_blobs([yellow_threshold],pixels_threshold=50, area_threshold=50, merge=True, margin=10)
-    blobs_green = img.find_blobs([green_threshold],pixels_threshold=50, area_threshold=50, merge=True, margin=10)
+    blobs_green = img.find_blobs([green_threshold],pixels_threshold=25, area_threshold=25, merge=True, margin=10)
     # QRcode识别
     #img.lens_corr(1.8) # 1.8的强度参数对于2.8mm镜头来说是不错的。
     for code in img.find_qrcodes():
@@ -81,6 +81,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据
+            message = code.payload()
+            print(message)
 
         if (code.payload() == '2'):
             data1=0x02
@@ -88,6 +90,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据
+            message = code.payload()
+            print(message)
 
         if (code.payload() == '11'):
             data1=0x03
@@ -95,6 +99,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据
+            message = code.payload()
+            print(message)
 
         if (code.payload() == '12'):
             data1=0x04
@@ -102,6 +108,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据
+            message = code.payload()
+            print(message)
 
         if (code.payload() == '21'):
             data1=0x05
@@ -109,6 +117,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据
+            message = code.payload()
+            print(message)
 
         if (code.payload() == '22'):
             data1=0x06
@@ -116,6 +126,8 @@ while(True):
             checkout=(data1+data2)   #取其低八位
             data = bytearray([0xAA,0x01,data1, data2,checkout,0x54])#转成16进制
             uart.write(data)#通过串口发送出去数据)
+            message = code.payload()
+            print(message)
 
 
 
@@ -159,7 +171,7 @@ while(True):
 
 
     for c in img.find_circles(threshold = 3500, x_margin = 8, y_margin = 8, r_margin = 10,
-            r_min = 2, r_max = 80, r_step = 2):
+            r_min = 2, r_max = 35, r_step = 2):
         area = (c.x()-c.r(), c.y()-c.r(), 2*c.r(), 2*c.r())
         #area为识别到的圆的区域，即圆的外接矩形框
         statistics = img.get_statistics(roi=area)#像素颜色统计

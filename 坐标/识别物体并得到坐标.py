@@ -22,6 +22,7 @@ sensor.set_framesize(sensor.QQVGA) # 使用QQVGA的速度。
 #设置图像像素大小
 
 sensor.skip_frames(10) # 让新的设置生效。
+sensor.set_auto_gain(False)
 sensor.set_auto_whitebal(False) # turn this off.
 #关闭白平衡。白平衡是默认开启的，在颜色识别中，需要关闭白平衡。
 clock = time.clock() # 跟踪FPS帧率
