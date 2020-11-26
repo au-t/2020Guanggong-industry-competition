@@ -23,7 +23,7 @@ sensor.set_framesize(sensor.QVGA) # 使用QVGA的速度。
 #设置图像像素大小
 
 # 打印出初始曝光时间以进行比较。
-print("Initial exposure == %d" % sensor.get_exposure_us())
+#print("Initial exposure == %d" % sensor.get_exposure_us())
 
 sensor.skip_frames(30)         # 等待设置生效。
 clock = time.clock()           # 创建一个时钟对象来跟踪FPS帧率。
@@ -35,7 +35,7 @@ sensor.set_auto_whitebal(False)
 sensor.skip_frames(time = 500)
 clock = time.clock() # 跟踪FPS帧率
 current_exposure_time_in_microseconds = sensor.get_exposure_us()
-print("Current Exposure == %d" % current_exposure_time_in_microseconds)
+#print("Current Exposure == %d" % current_exposure_time_in_microseconds)
 
 # 默认情况下启用自动曝光控制（AEC）。调用以下功能可禁用传感器自动曝光控制。
 # 另外“exposure_us”参数在AEC被禁用后覆盖自动曝光值。

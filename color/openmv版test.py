@@ -18,7 +18,7 @@ sensor.reset() # 初始化sensor
 sensor.set_pixformat(sensor.RGB565) # use RGB565.
 #设置图像色彩格式，有RGB565色彩图和GRAYSCALE灰度图两种
 
-sensor.set_framesize(sensor.QVGA) # 使用QQVGA的速度。
+sensor.set_framesize(sensor.QQVGA) # 使用QQVGA的速度。
 #设置图像像素大小
 
 sensor.skip_frames(10) # 让新的设置生效。

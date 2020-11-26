@@ -54,9 +54,6 @@ while(True):
         if blobs1:
             img.draw_circle(c.x(), c.y(), c.r(), color = (0, 0, 255))
             print("green")
-        if blobs2:
-            img.draw_circle(c.x(), c.y(), c.r(), color = (0, 255, 0))
-            print("red")
         if blobs3:
             img.draw_circle(c.x(), c.y(), c.r(), color = (255, 0, 0))
             print("yellow")
